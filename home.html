@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost & Found — Home</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Interactive Background Blobs -->
+  <div class="blob-container">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Found<span>It</span></div>
+    <div class="navbar-right">
+      <span class="user-email" id="user-email"></span>
+      <a href="dashboard.html" class="btn btn-secondary btn-sm">Dashboard</a>
+      <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="home-wrap">
+    <div class="home-content">
+      <h1>What happened<br /><span>today?</span></h1>
+      <p>Report a lost item or log something you found on campus. We'll help connect the dots.</p>
+
+      <div class="home-actions">
+        <button class="home-btn lost" onclick="window.location.href='report-lost.html'">
+          I Lost Something
+          <span class="btn-sub">Report a missing item</span>
+        </button>
+        <button class="home-btn found" onclick="window.location.href='report-found.html'">
+          I Found Something
+          <span class="btn-sub">Log what you picked up</span>
+        </button>
+      </div>
+
+      <div style="margin-top:2rem">
+        <a href="browse.html" class="btn btn-outline">
+          Browse Found Items
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    ; (async () => {
+      await requireAuth()
+      await showUserEmail()
+    })()
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost & Found — My Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Interactive Background Blobs -->
+  <div class="blob-container">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="logo">Found<span>It</span></div>
+    <div class="navbar-right">
+      <span class="user-email" id="user-email"></span>
+      <a href="home.html" class="btn btn-secondary btn-sm">Home</a>
+      <a href="browse.html" class="btn btn-outline btn-sm">Browse</a>
+      <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top:2.5rem">
+
+    <div class="page-header">
+      <h1>My <span>Dashboard</span></h1>
+      <p>Everything you've reported, found, and claimed — in one place.</p>
+    </div>
+
+    <!-- ① LOST ITEMS I REPORTED -->
+    <!-- JS reads: #lost-list, #lost-badge -->
+    <!-- JS calls: deleteLostItem(id) -->
+    <div class="dash-section">
+      <h2>
+        Items I Reported Lost
+        <span class="badge" id="lost-badge">…</span>
+      </h2>
+      <div class="dash-list" id="lost-list">
+        <div style="color:var(--muted);font-size:0.9rem">Loading…</div>
+      </div>
+    </div>
+
+    <!-- ② FOUND ITEMS I POSTED -->
+    <!-- JS reads: #found-list, #found-badge -->
+    <!-- JS calls: deleteFoundItem(id) -->
+    <div class="dash-section">
+      <h2>
+        Items I Found &amp; Posted
+        <span class="badge" id="found-badge">…</span>
+      </h2>
+      <div class="dash-list" id="found-list">
+        <div style="color:var(--muted);font-size:0.9rem">Loading…</div>
+      </div>
+    </div>
+
+    <!-- ③ MY CLAIMS (I am the lost person who claimed something) -->
+    <!-- JS reads: #claims-list, #claims-badge -->
+    <div class="dash-section">
+      <h2>
+        🤝 My Claims
+        <span class="badge" id="claims-badge">…</span>
+      </h2>
+      <div class="dash-list" id="claims-list">
+        <div style="color:var(--muted);font-size:0.9rem">Loading…</div>
+      </div>
+    </div>
+
+    <!-- ④ INCOMING CLAIMS (I am the finder; others are claiming my items) -->
+    <!-- JS reads: #incoming-claims-list, #incoming-claims-badge -->
+    <!-- JS calls: confirmClaim(id), openContactModal(id) -->
+    <div class="dash-section">
+      <h2>
+        📬 Incoming Claims on My Found Items
+        <span class="badge" id="incoming-claims-badge">…</span>
+      </h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem">
+        Someone thinks one of your found items is theirs. Confirm the handover or share your number to coordinate a
+        time.
+      </p>
+      <div class="dash-list" id="incoming-claims-list">
+        <div style="color:var(--muted);font-size:0.9rem">Loading…</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ⑤ CONTACT NUMBER MODAL (Suggest Time Change flow) -->
+  <!-- JS reads: #contact-modal-overlay, #contact-number-input -->
+  <!-- JS calls: submitContactNumber(), closeContactModal() -->
+  <div class="modal-overlay" id="contact-modal-overlay">
+    <div class="modal">
+      <h2>📞 Share Your Contact Number</h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem;font-size:0.95rem">
+        Your number will be shared with the claimant so you can coordinate a pickup time directly.
+      </p>
+      <div class="form-group">
+        <label>Your Phone Number</label>
+        <input type="tel" id="contact-number-input" placeholder="e.g. 98765 43210" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="submitContactNumber()" style="flex:1">
+          Share &amp; Confirm Claim
+        </button>
+        <button class="btn btn-secondary" onclick="closeContactModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+
+</html>

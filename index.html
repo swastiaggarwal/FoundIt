@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost & Found — Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Interactive Background Blobs -->
+  <div class="blob-container">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="auth-wrap">
+    <div class="auth-box">
+
+      <div class="auth-logo">Found<span>It</span></div>
+      <p class="auth-tagline">The SAU search party that actually works.</p>
+
+      <div id="alert" class="alert"></div>
+
+      <!-- LOGIN FORM -->
+      <div id="login-form">
+        <div class="form-group">
+          <label>College Email</label>
+          <input type="email" id="login-email" placeholder="you@college.edu" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-primary btn-full" onclick="handleLogin()">
+          Sign In
+        </button>
+        <div class="auth-toggle">
+          Don't have an account? <a onclick="toggleForm('signup')">Sign up</a>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signup-form" style="display:none">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="signup-name" placeholder="Full name" />
+        </div>
+        <div class="form-group">
+          <label>College Email</label>
+          <input type="email" id="signup-email" placeholder="you@college.edu" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" placeholder="Min. 6 characters" />
+        </div>
+        <button class="btn btn-primary btn-full" onclick="handleSignup()">
+          Create Account
+        </button>
+        <div class="auth-toggle">
+          Already have an account? <a onclick="toggleForm('login')">Sign in</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+
+    // If already logged in, skip to home
+    ; (async () => {
+      const { data: { session } } = await db.auth.getSession()
+      if (session) window.location.href = 'home.html'
+    })()
+
+    function toggleForm(which) {
+      document.getElementById('login-form').style.display = which === 'login' ? 'block' : 'none'
+      document.getElementById('signup-form').style.display = which === 'signup' ? 'block' : 'none'
+      hideAlert()
+    }
+
+    function showAlert(msg, type = 'error') {
+      const el = document.getElementById('alert')
+      el.textContent = msg
+      el.className = `alert alert-${type} show`
+    }
+    function hideAlert() {
+      document.getElementById('alert').className = 'alert'
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById('login-email').value.trim()
+      const password = document.getElementById('login-password').value
+      if (!email || !password) return showAlert('Please fill in all fields.')
+      try {
+        await login(email, password)
+        window.location.href = 'home.html'
+      } catch (e) {
+        showAlert(e.message)
+      }
+    }
+
+    async function handleSignup() {
+      const name = document.getElementById('signup-name').value.trim()
+      const email = document.getElementById('signup-email').value.trim()
+      const password = document.getElementById('signup-password').value
+      if (!name || !email || !password) return showAlert('Please fill in all fields.')
+      if (password.length < 6) return showAlert('Password must be at least 6 characters.')
+      try {
+        await signUp(email, password, name)
+        showAlert('Account created! Check your email to confirm, then sign in.', 'success')
+        toggleForm('login')
+      } catch (e) {
+        showAlert(e.message)
+      }
+    }
+
+  </script>
+</body>
+
+</html>

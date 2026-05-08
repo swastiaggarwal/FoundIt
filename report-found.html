@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost & Found — Report Found Item</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Interactive Background Blobs -->
+  <div class="blob-container">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="logo">Found<span>It</span></div>
+    <div class="navbar-right">
+      <span class="user-email" id="user-email"></span>
+      <a href="home.html" class="btn btn-secondary btn-sm">Back</a>
+      <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container-sm" style="padding-top:2.5rem">
+
+    <div class="page-header">
+      <h1>Log a <span>Found</span> Item</h1>
+      <p>Good on you for picking it up. Let's get it back to its owner.</p>
+    </div>
+
+    <div class="form-card">
+      <div id="alert" class="alert"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Item Type *</label>
+          <select id="type">
+            <option value="">Select type…</option>
+            <option>Wallet</option>
+            <option>Phone</option>
+            <option>Keys</option>
+            <option>Bag / Backpack</option>
+            <option>Water Bottle</option>
+            <option>Laptop</option>
+            <option>Earphones / AirPods</option>
+            <option>ID Card</option>
+            <option>Glasses</option>
+            <option>Umbrella</option>
+            <option>Jacket / Hoodie</option>
+            <option>Notebook</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Colour *</label>
+          <select id="colour">
+            <option value="">Select colour…</option>
+            <option>Black</option>
+            <option>White</option>
+            <option>Grey</option>
+            <option>Brown</option>
+            <option>Red</option>
+            <option>Orange</option>
+            <option>Yellow</option>
+            <option>Green</option>
+            <option>Blue</option>
+            <option>Purple</option>
+            <option>Pink</option>
+            <option>Multicolour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Where did you find it? *</label>
+        <select id="location">
+          <option value="">Select location…</option>
+          <option>Library</option>
+          <option>Cafeteria / Canteen</option>
+          <option>Main Block</option>
+          <option>Lab Block</option>
+          <option>Auditorium</option>
+          <option>Sports Ground</option>
+          <option>Parking Area</option>
+          <option>Hostel</option>
+          <option>Admin Block</option>
+          <option>Common Room</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Do you have it with you? *</label>
+        <select id="kept">
+          <option value="">Select…</option>
+          <option value="yes">Yes, I kept it with me</option>
+          <option value="no">No, I left it where I found it</option>
+        </select>
+      </div>
+
+      <!-- Only shown if kept = yes -->
+      <div id="handover-section" style="display:none">
+        <div class="form-group">
+          <label>When & Where can the owner collect it?</label>
+          <textarea id="handover"
+            placeholder="e.g. 'Library front desk, Mon–Fri 9am–5pm' or 'Hostel Block C room 204, evenings'"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Extra Details</label>
+        <textarea id="notes"
+          placeholder="Describe the item — brand, condition, markings, anything that helps identify it."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Photo (optional)</label>
+        <div class="file-upload-area">
+          <input type="file" id="photo" accept="image/*" />
+          <div class="upload-icon">📷</div>
+          <p>Tap to upload a photo</p>
+          <p class="file-name" id="file-name"></p>
+        </div>
+        <div class="photo-preview" id="photo-preview">
+          <img id="preview-img" src="" alt="Preview" />
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-full" id="submit-btn" onclick="submitFoundReport()">
+        Submit Report
+      </button>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/report-found.js"></script>
+</body>
+
+</html>
